@@ -26,6 +26,7 @@ int main(int argc, char** argv)
 {
   int N;			//number of particles
   int nstep; 		//number ot integration steps
+  int num_gpus;
   
   GSimulation sim;
    std::string a ;
@@ -39,19 +40,8 @@ int main(int argc, char** argv)
       sim.set_number_of_steps(nstep);  
     }
     if(argc > 3) 
-      a = argv[3];
-      std::cout << a << std::endl;
-      if (!a.compare("cpu")) sim.set_devices(1);
-      if (!a.compare(std::string("gpu"))) sim.set_devices(2);
-      if (!a.compare(std::string("cpu+gpu"))) sim.set_devices(3);
-
-    if(argc > 4) 
-      sim.set_cpu_ratio(atof(argv[4]));
-
-    if(argc > 5) {
-      sim.set_cpu_wgsize(atoi(argv[5]));
-      sim.set_gpu_wgsize(atoi(argv[6]));
-    }
+      num_gpus =atoi(argv[3]);
+      sim.set_number_of_gpus(num_gpus);
   }
   
   sim.start();

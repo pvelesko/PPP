@@ -36,12 +36,8 @@ public:
   void start();
   void update(real_type dt);
 
-  inline void set_cpu_ratio(const float &cpu_ratio){ _cpu_ratio = cpu_ratio; }
-  inline void set_cpu_wgsize(const int &cpu_wgsize){ _cpu_wgsize = cpu_wgsize; }
-  inline void set_gpu_wgsize(const int &gpu_wgsize){ _gpu_wgsize = gpu_wgsize; }
-  inline int get_cpu_ratio() const {return _cpu_ratio; }
-  inline void set_devices(int N) { _devices = N;};
-  inline int get_devices() { return _devices;};
+  inline void set_number_of_gpus(const int &num_gpus){ _num_gpus = num_gpus; }
+  inline int get_number_of_gpus(){ return _num_gpus; }
   
 private:
   ParticleSoA *particles;
@@ -57,10 +53,7 @@ private:
   double _totTime;		//total time of the simulation
   double _totFlops;		//total number of flops 
 
-  float _cpu_ratio = -1.0f;
-  int _cpu_wgsize = 0;
-  int _gpu_wgsize = 0;
-  int _devices = 0;
+  int _num_gpus = 0;
    
   void init_pos();	
   void init_vel();

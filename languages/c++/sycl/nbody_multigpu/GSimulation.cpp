@@ -144,10 +144,19 @@ void GSimulation :: start()
   auto gpu_devices = gpu_platform.get_devices(); 
   gpu_context = context(gpu_platform);
 
-  std::cout << "Number of GPU Devices: " << gpu_devices.size() << std::endl;
+  std::cout << "Number of GPU Devices Available: " << gpu_devices.size() << std::endl;
   std::vector<queue> q{}; // queue vector 
-  for (auto& dev : gpu_devices)
-    q.push_back(queue(dev, exception_handler));
+  int use_gpus;
+  if(get_number_of_gpus() != 0) {
+    use_gpus = get_number_of_gpus();
+  } else {
+    use_gpus = gpu_devices.size();
+  }
+  std::cout << "Number of GPU Devices to Use: " << use_gpus << std::endl;
+
+  for (int i = 0; i < use_gpus; i++)
+    q.push_back(queue(gpu_devices[i], exception_handler));
+
   std::cout << "Number of queues available: " << q.size() << std::endl;
   if (q.size() < 2) {
     std::cout << "This test requires multiple GPUs, like a DGX system" << std::endl;
@@ -156,24 +165,6 @@ void GSimulation :: start()
 
   int num_devices = q.size();
   int n = get_npart();
-
-    /* Set up workgroup sizes
-     * very naive implementaiton assuming device[0] is CPU
-     * and device[1] is GPU. If using 1 device, say only GPU
-     * which is normally the 2nd platform that's found it's
-     * best to use the same wgsize arguments:
-     * ./nbody.x 2000 5000 -1 256 256
-     * -1 for no tuning of work-split
-     *  256 local size for all devices. Currently max of 2
-     */
-    if (_cpu_wgsize != 0 and _gpu_wgsize != 0) {
-      //local[0] = cl::NDRange(_cpu_wgsize);
-      //local[1] = cl::NDRange(_gpu_wgsize);
-      printf("CPU WorkGroup Size:%d\n", _cpu_wgsize);
-      printf("GPU WorkGroup Size:%d\n", _gpu_wgsize);
-    } else {
-      printf("Using automatic WorkGroup sizes\n");
-    }
 
   // data/array offsets for splitting work between GPUs
   int* starts = new int(num_devices);
