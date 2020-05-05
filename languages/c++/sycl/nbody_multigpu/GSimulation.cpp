@@ -158,10 +158,6 @@ void GSimulation :: start()
     q.push_back(queue(gpu_devices[i], exception_handler));
 
   std::cout << "Number of queues available: " << q.size() << std::endl;
-  if (q.size() < 2) {
-    std::cout << "This test requires multiple GPUs, like a DGX system" << std::endl;
-    exit(0);
-  }
 
   int num_devices = q.size();
   int n = get_npart();
