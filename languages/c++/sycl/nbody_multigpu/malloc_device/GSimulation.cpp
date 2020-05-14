@@ -188,17 +188,17 @@ void GSimulation :: start()
   event* e = new event[num_devices];
 
   /* malloc_host allows all the GPUs in gpu_context to access this data */
-  particles = (ParticleSoA*) malloc_host(sizeof(ParticleSoA),      gpu_context);
-  particles->pos_x = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->pos_y = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->pos_z = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->vel_x = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->vel_y = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->vel_z = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->acc_x = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->acc_y = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->acc_z = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
-  particles->mass  = (real_type*) malloc_host(n*sizeof(real_type), gpu_context);
+  particles = (ParticleSoA*)      malloc(sizeof(ParticleSoA));
+  particles->pos_x = (real_type*) malloc(n*sizeof(real_type));
+  particles->pos_y = (real_type*) malloc(n*sizeof(real_type));
+  particles->pos_z = (real_type*) malloc(n*sizeof(real_type));
+  particles->vel_x = (real_type*) malloc(n*sizeof(real_type));
+  particles->vel_y = (real_type*) malloc(n*sizeof(real_type));
+  particles->vel_z = (real_type*) malloc(n*sizeof(real_type));
+  particles->acc_x = (real_type*) malloc(n*sizeof(real_type));
+  particles->acc_y = (real_type*) malloc(n*sizeof(real_type));
+  particles->acc_z = (real_type*) malloc(n*sizeof(real_type));
+  particles->mass  = (real_type*) malloc(n*sizeof(real_type));
 
   std::vector<float*> d_particles_acc_x;
   std::vector<float*> d_particles_acc_y;
@@ -438,15 +438,15 @@ void GSimulation :: print_header()
 
 GSimulation :: ~GSimulation()
 {
- free(particles->pos_x, gpu_context);
- free(particles->pos_y, gpu_context);
- free(particles->pos_z, gpu_context);
- free(particles->vel_x, gpu_context);
- free(particles->vel_y, gpu_context);
- free(particles->vel_z, gpu_context);
- free(particles->acc_x, gpu_context);
- free(particles->acc_y, gpu_context);
- free(particles->acc_z, gpu_context);
- free(particles->mass,  gpu_context);
- free(particles,        gpu_context);
+ free(particles->pos_x);
+ free(particles->pos_y);
+ free(particles->pos_z);
+ free(particles->vel_x);
+ free(particles->vel_y);
+ free(particles->vel_z);
+ free(particles->acc_x);
+ free(particles->acc_y);
+ free(particles->acc_z);
+ free(particles->mass);
+ free(particles);
 }
