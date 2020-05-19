@@ -64,7 +64,6 @@ class CUDASelector : public cl::sycl::device_selector {
 };
 
 using namespace cl::sycl;
-context gpu_context;
 
 GSimulation :: GSimulation()
 {
@@ -142,7 +141,6 @@ void GSimulation :: start()
 
   auto gpu_platform = platform(gpu_selector{});
   auto gpu_devices = gpu_platform.get_devices(); 
-  gpu_context = context(gpu_platform);
 
   std::cout << "Number of GPU Devices Available: " << gpu_devices.size() << std::endl;
   std::vector<queue> q{}; // queue vector 
