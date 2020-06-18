@@ -6,10 +6,10 @@
 
 using HostSpace = Kokkos::HostSpace;
 
-//using MemSpace = Kokkos::Experimental::SYCLHostUSMSpace;
-//using ExSpace = Kokkos::Experimental::SYCL;
-using MemSpace = Kokkos::Experimental::OpenMPTargetSpace;
-using ExSpace = Kokkos::Experimental::OpenMPTarget;
+using MemSpace = Kokkos::Experimental::SYCLHostUSMSpace;
+using ExSpace = Kokkos::Experimental::SYCL;
+//using MemSpace = Kokkos::Experimental::OpenMPTargetSpace;
+//using ExSpace = Kokkos::Experimental::OpenMPTarget;
 //using MemSpace = Kokkos::HostSpace;
 //using ExSpace = Kokkos::Serial;
 using KokkosDevice = Kokkos::Device<ExSpace, MemSpace>;
